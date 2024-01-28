@@ -1,3 +1,9 @@
+/***********************
+ * Alon Filler
+ * 216872374
+ * Assignment 2
+***********************/
+
 #include<stdio.h>
 
 int scanNumberVerbose();
@@ -12,11 +18,18 @@ int fourthQuest();
 int fifthQuest();
 
 int main() {
+	/*
+		Calls the playGame function until it returns 1
+	*/
 	int hasUserQuit = 0;
 	while (!hasUserQuit) hasUserQuit = playGame();
 	return 0;
 }
 int isPrime(int number) {
+	/*
+		Input: integer number
+		Output: 1 if the number is a prime number and 0 otherwise
+	*/
 	if (number == 2) return 1;
 	if (number % 2 == 0) return 0;
 	for (int i = 3; i <= number/2; i += 2) {
@@ -26,6 +39,10 @@ int isPrime(int number) {
 	return 1;
 }
 int scanNumberVerbose() {
+	/*
+		User Input: An integer number
+		Output: the number
+	*/
 	int number;
 	printf("Enter a number: ");
 	scanf("%d", &number);
@@ -33,6 +50,10 @@ int scanNumberVerbose() {
 	return number;
 }
 int playGame() {
+	/*
+		Starts the game
+		Output: returns 1 if the user quit and 0 otherwise
+	*/
 	int chosenQuestNumber;
 	printf("Welcome to Thanos's playground.\n");
 	printf("Choose your adventure:\n");
@@ -43,7 +64,7 @@ int playGame() {
 	printf("5. Quit the quest\n");
 	printf("\n");
 	scanf("%d", &chosenQuestNumber);
-
+	
 	if (!validateQuestNumber(chosenQuestNumber)) return 0;
 	if (chosenQuestNumber == 1) return firstQuest();
 	if (chosenQuestNumber == 2) return secondQuest();
@@ -54,6 +75,10 @@ int playGame() {
 }
 
 int validateQuestNumber(int chosenQuestNumber) {
+	/*
+		Validates that the quest exists
+		Output: returns 0 if the quest does not exist, and 1 if it does
+	*/
 	if (chosenQuestNumber < 1 || chosenQuestNumber > 5) {
 		printf("Thanos is mad! You are playing his game and this is not an option. Choose again, wisely.\n");
 		printf("\n");
@@ -62,10 +87,21 @@ int validateQuestNumber(int chosenQuestNumber) {
 	return 1;
 }
 void printError(int numRequired) {
+	/*
+		Input: integer numRequired, which indicates what is the minimum input possible 
+		Prints: A generic error message which entails the numRequired variable integrated in to it
+	*/
 	printf("Foolish mortal! You cannot solve Thanos's quest with an input that isn't a number bigger than %d\n", numRequired);
 	printf("\n");
 }
 int firstQuest() {
+	/*
+		Runs the first quest (FizzBuzz game)
+		User Input: a number
+		Validation: ensures that the number is greater than 1
+		Prints: FizzBuzz until the input number
+		Output: returns 0, user did not quit
+	*/
 	int number = scanNumberVerbose();
 	if (number <= 1) {
 		printError(1);
@@ -83,6 +119,13 @@ int firstQuest() {
 }
 
 int secondQuest() {
+	/*
+		Runs the second quest (Prints fibonacci numbers)
+		User Input: a number: n
+		Validation: ensures that the number is greater than 0
+		Prints: First n elements of the fibonacci sequence
+		Output: returns 0, user did not quit
+	*/
 	int n = scanNumberVerbose();
 	if (n <= 0) {
 		printError(0);
@@ -102,6 +145,13 @@ int secondQuest() {
 }
 
 int thirdQuest() {
+	/*
+		Runs the third quest (Finds the sum of all the prime numbers up until and including n)
+		User Input: a number: n
+		Validation: ensures that the number is greater than 1
+		Prints: The sum of all prime numbers smaller or equal to n
+		Output: returns 0, user did not quit
+	*/
 	int n = scanNumberVerbose();
 	if (n <= 1) {
 		printError(1);
@@ -118,6 +168,13 @@ int thirdQuest() {
 }
 
 int fourthQuest() {
+	/*
+		Runs the fourth quest (Checks whether the number is perfect)
+		User Input: a number: n
+		Validation: ensures that the number is greater than 0
+		Prints: Whether the number is perfect or not
+		Output: returns 0, user did not quit
+	*/
 	int n = scanNumberVerbose();
 	if (n <= 0) {
 		printError(0);
@@ -136,6 +193,11 @@ int fourthQuest() {
 }
 
 int fifthQuest() {
+	/*
+		Exits the game
+		Prints: Congratulations dialogue message
+		Output: returns 1, user quit
+	*/
 	printf("Congratulations! You finished the quest and managed to defeat Thanos\n");
 	return 1;
 }
