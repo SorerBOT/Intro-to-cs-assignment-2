@@ -7,7 +7,7 @@
 #include<stdio.h>
 
 int scanNumberVerbose();
-int isPrime(unsigned long long int number);
+int isPrime(int number);
 int playGame();
 int validateQuestNumber(int chosenQuestNumber, double remainder);
 void printError(int numRequired);
@@ -25,14 +25,14 @@ int main() {
 	while (!hasUserQuit) hasUserQuit = playGame();
 	return 0;
 }
-int isPrime(unsigned long long int number) {
+int isPrime(int number) {
 	/*
 		Input: integer number
 		Output: 1 if the number is a prime number and 0 otherwise
 	*/
 	if (number == 2) return 1;
 	if (number % 2 == 0) return 0;
-	for (unsigned long long int i = 3; i <= (number/2) + 1; i += 2) {
+	for (int i = 3; i <= (number/2) + 1; i += 2) {
 		if (number % i == 0) return 0;
 	}
 
@@ -43,11 +43,14 @@ int scanNumberVerbose() {
 		User Input: An integer number
 		Output: the number
 	*/
-	int number;
+	double number, remainder;
 	printf("Enter a number: ");
-	scanf("%d", &number);
+	scanf("%lf", &number);
+	remainder = number - (int) number;
+	// if the input was a number like 1.123
+	if (remainder != 0.0) return -1;
 
-	return number;
+	return (int) number;
 }
 int playGame() {
 	/*
@@ -67,7 +70,6 @@ int playGame() {
 	scanf("%lf", &chosenQuestNumberAsDouble);
 	chosenQuestNumber = (int) chosenQuestNumberAsDouble;
 	
-	// If the input was a number of the likes of 1.1, 1.232323323, etc.:
 	remainder = chosenQuestNumberAsDouble - chosenQuestNumber;
 
 	if (!validateQuestNumber(chosenQuestNumber, remainder)) return 0;
@@ -89,6 +91,7 @@ int validateQuestNumber(int chosenQuestNumber, double remainder) {
 		printf("\n");
 		return 0;
 	}
+	// If the input was a number of the likes of 1.1, 1.232323323, etc.:
 	if (remainder != 0.0) {
 		printf("Thanos is mad! You are playing his game and this is not an option. Choose again, wisely.\n");
 		printf("\n");
