@@ -55,6 +55,7 @@ int scanNumberVerbose() {
 int playGame() {
 	/*
 		Starts the game
+		User Input: chosen quest number
 		Output: returns 1 if the user quit and 0 otherwise
 	*/
 	double chosenQuestNumberAsDouble, remainder;
