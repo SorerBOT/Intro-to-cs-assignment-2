@@ -7,9 +7,9 @@
 #include<stdio.h>
 
 int scanNumberVerbose();
-int isPrime(int number);
+int isPrime(unsigned long long int number);
 int playGame();
-int validateQuestNumber(int chosenQuestNumber);
+int validateQuestNumber(int chosenQuestNumber, double remainder);
 void printError(int numRequired);
 int firstQuest();
 int secondQuest();
@@ -25,14 +25,14 @@ int main() {
 	while (!hasUserQuit) hasUserQuit = playGame();
 	return 0;
 }
-int isPrime(int number) {
+int isPrime(unsigned long long int number) {
 	/*
 		Input: integer number
 		Output: 1 if the number is a prime number and 0 otherwise
 	*/
 	if (number == 2) return 1;
 	if (number % 2 == 0) return 0;
-	for (int i = 3; i <= number/2; i += 2) {
+	for (unsigned long long int i = 3; i <= (number/2) + 1; i += 2) {
 		if (number % i == 0) return 0;
 	}
 
@@ -54,6 +54,7 @@ int playGame() {
 		Starts the game
 		Output: returns 1 if the user quit and 0 otherwise
 	*/
+	double chosenQuestNumberAsDouble, remainder;
 	int chosenQuestNumber;
 	printf("Welcome to Thanos's playground.\n");
 	printf("Choose your adventure:\n");
@@ -63,9 +64,13 @@ int playGame() {
 	printf("4. The Sorcery of Thanos\n");
 	printf("5. Quit the quest\n");
 	printf("\n");
-	scanf("%d", &chosenQuestNumber);
+	scanf("%lf", &chosenQuestNumberAsDouble);
+	chosenQuestNumber = (int) chosenQuestNumberAsDouble;
 	
-	if (!validateQuestNumber(chosenQuestNumber)) return 0;
+	// If the input was a number of the likes of 1.1, 1.232323323, etc.:
+	remainder = chosenQuestNumberAsDouble - chosenQuestNumber;
+
+	if (!validateQuestNumber(chosenQuestNumber, remainder)) return 0;
 	if (chosenQuestNumber == 1) return firstQuest();
 	if (chosenQuestNumber == 2) return secondQuest();
 	if (chosenQuestNumber == 3) return thirdQuest();
@@ -74,7 +79,7 @@ int playGame() {
 	return 0;
 }
 
-int validateQuestNumber(int chosenQuestNumber) {
+int validateQuestNumber(int chosenQuestNumber, double remainder) {
 	/*
 		Validates that the quest exists
 		Output: returns 0 if the quest does not exist, and 1 if it does
@@ -83,6 +88,12 @@ int validateQuestNumber(int chosenQuestNumber) {
 		printf("Thanos is mad! You are playing his game and this is not an option. Choose again, wisely.\n");
 		printf("\n");
 		return 0;
+	}
+	if (remainder != 0.0) {
+		printf("Thanos is mad! You are playing his game and this is not an option. Choose again, wisely.\n");
+		printf("\n");
+		return 0;
+
 	}
 	return 1;
 }
@@ -131,10 +142,10 @@ int secondQuest() {
 		printError(0);
 		return 0;
 	}
-	int current = 1, previous = 0;
+	unsigned long long int current = 1, previous = 0;
 	
 	for (int i = 1; i <= n; i++) {
-		printf("%d", previous);
+		printf("%llu", previous);
 		current += previous;
 		previous = current - previous;
 		if (i == n) printf("\n");
@@ -158,11 +169,11 @@ int thirdQuest() {
 		return 0;
 	}
 	
-	int sum = 0;
+	unsigned long long int sum = 0;
 	for (int i = 2; i <= n; i++) {
 		if (isPrime(i)) sum += i;
 	}
-	printf("%d\n", sum);
+	printf("%llu\n", sum);
 	printf("\n");
 	return 0;
 }
@@ -180,7 +191,7 @@ int fourthQuest() {
 		printError(0);
 		return 0;
 	}
-	int sum = 0;
+	unsigned long long int sum = 0;
 	for (int i = 1; i < n; i++) {
 		if (n % i == 0) sum += i;
 	}
