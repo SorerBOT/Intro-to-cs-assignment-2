@@ -40,7 +40,7 @@ int isPrime(int number) {
 }
 int scanNumberVerbose() {
 	/*
-		User Input: An integer number
+		User Input: A number
 		Output: the number
 	*/
 	double number, remainder;
@@ -195,7 +195,7 @@ int fourthQuest() {
 		printError(0);
 		return 0;
 	}
-	unsigned long long int sum = 0;
+	int sum = 0;
 	for (int i = 1; i < n; i++) {
 		if (n % i == 0) sum += i;
 	}
